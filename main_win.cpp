@@ -19,7 +19,7 @@ int main()
     
     do
     {
-        system("clear");
+        system("cls");
         cout << "1.) Play\n";
         cout << "2.) Highscores\n";
         cout << "3.)\n";
@@ -31,7 +31,7 @@ int main()
         
         cin >> menu;
 
-        system("clear");
+        system("cls");
 
         if(menu == 1)
         {
@@ -43,7 +43,7 @@ int main()
 
             do
             {
-                system("clear");
+                system("cls");
 
                 cout << "Table";
                 printIndex(tableHead);
@@ -71,7 +71,7 @@ int main()
                 }
             } while (subMenu != 0);
 
-            system("clear");
+            system("cls");
             
             string* submitted = new string;
 
