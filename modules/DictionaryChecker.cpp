@@ -1,37 +1,35 @@
-#include <fstream>
-
-using std::string;
-
 class Dictionary
 {
-    std::fstream f;
-    string* str = new string[370105];
+    std::string* dictionary = new std::string[370105];
 
-    public : Dictionary()
+    public:
+    Dictionary()
     {
-        f.open("../src/words_alpha.txt", std::ios::in);
+        std::fstream f;
+        f.open("src/words_alpha.txt");
 
         if(!f.is_open())
-        {}
+        {
+            cout << "Error when opening file.\n";
+        }
 
         int i = 0;
         while(!f.eof())
         {
-            f >> str[i];
+            f>>dictionary[i];
             i++;
         }
         f.close();
     }
 
-    bool checkDictionary(string search)
+    bool checkDictionary(std::string search)
     {
         for(int i = 0; i<370105; i++)
         {
-            if(search == *str)
+            if(search == dictionary[i])
             {
                 return true;
             }
-            str++;
         }
         return false;
     }

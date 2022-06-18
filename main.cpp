@@ -1,21 +1,22 @@
 #include <iostream>
-#include <ctime>
+#include <time.h>
 #include <stdlib.h>
+#include <fstream>
+
+using std::cout;
+using std::cin;
+
 #include "modules/LinkedList.cpp"
 #include "modules/LetterPicker.cpp"
 #include "modules/DictionaryChecker.cpp"
 
-using std::cout;
-using std::cin;
-using std::string;
-
 int main()
 {
-    srand(time(NULL));
+    srand(time(0));
     int menu, subMenu, index;
     Node* tableHead = NULL;
     Node* handHead = NULL;
-    Dictionary Checker;
+    Dictionary checker;
     
     do
     {
@@ -45,11 +46,11 @@ int main()
             {
                 system("clear");
 
-                cout << "Table";
+                cout << "Table\n";
                 printIndex(tableHead);
                 printLinkedList(tableHead);
                 cout << '\n';
-                cout << "Hand";
+                cout << "Hand\n";
                 printIndex(handHead);
                 printLinkedList(handHead);
                 cout << '\n';
@@ -57,6 +58,8 @@ int main()
                 cout << "1.) Ambil huruf dari table\n";
                 cout << "2.) Masukkan huruf ke table\n";
                 cout << "0.) Submit susunan pada table\n";
+
+                cin >> subMenu;
                 if(subMenu == 1)
                 {
                     cout << "Index ke? ";
@@ -73,16 +76,20 @@ int main()
 
             system("clear");
             
-            string* submitted = new string;
-
-            if(Checker.checkDictionary(*submitted))
+            std::string submit;
+            submit = "test";
+            
+            if(checker.checkDictionary(submit))
             {
-                cout << "Kata yang anda submit ada di kamus";
+                cout << "Kata yang anda submit ada di kamus\n";
             }
             else
             {
-                cout << "Kata yang anda submit tidak ada di kamus";
+                cout << "Kata yang anda submit tidak ada di kamus\n";
             }
+
+            cin.ignore();
+            cin.ignore();
         }
         /**
         else if(menu == 2)
