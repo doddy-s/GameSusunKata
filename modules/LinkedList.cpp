@@ -19,53 +19,37 @@ void addNodeRight(Node** pHead, char newChar)
     Node* temp = *pHead;
     *newNode = {newChar, NULL};
 
-    while(temp->next!=NULL)
-    {
-        temp = temp->next;
-    }
+    while(temp->next!=NULL) temp = temp->next;
 
     temp->next = newNode;
 }
 
-void addNodeMiddle(Node** pHead, char newChar, int index)
+void addNodeMid(Node** pHead, char newChar, int index)
 {
     Node* temp = *pHead;
 
-    for(int i = 1; i<index; i++)
-    {
-        temp = temp->next;
-    }
+    for(int i = 1; i<index; i++) temp = temp->next;
 
     Node* newNode = new Node;
     *newNode = {newChar, temp->next};
     temp->next = newNode;
 }
 
-void printIndex(Node* pHead)
+void reverse(Node** pHead)
 {
-    cout << "| ";
-    int i = 1;
-    while(pHead!=NULL)
+    Node *current = *pHead, *prev = NULL, *next = NULL;
+
+    while(current != NULL)
     {
-        cout << i << " | ";
-        pHead = pHead->next;
-        i++;
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
     }
-    cout << '\n';
+    *pHead = prev;
 }
 
-void printLinkedList(Node* pHead)
-{
-    cout << "| ";
-    while(pHead!=NULL)
-    {
-        cout << pHead->letter << " | ";
-        pHead = pHead->next;
-    }
-    cout << '\n';
-}
-
-void deleteNode(Node** pHead,Node** pHead2, int index)
+void deleteNode(Node** pHead, int index)
 {
     Node* temp = *pHead;
 
@@ -84,8 +68,52 @@ void deleteNode(Node** pHead,Node** pHead2, int index)
             temp = temp->next;
         }
 
-        addNodeRight(pHead2, temp->letter);
         prev->next = temp->next;
         delete temp;
     }
+}
+
+void deleteList(Node** pHead)
+{
+    Node* current = *pHead;
+    Node* next = NULL;
+ 
+    while (current != NULL)
+    {
+        next = current->next;
+        delete current;
+        current = next;
+    }
+
+    *pHead = NULL;
+}
+
+char getLetter(Node* temp, int index)
+{
+    for(int i = 1; i<index; i++) temp = temp->next;
+    return temp->letter;
+}
+
+void printIndex(Node* temp)
+{
+    cout << "Index  | ";
+    int i = 1;
+    while(temp!=NULL)
+    {
+        cout << i << " | ";
+        temp = temp->next;
+        i++;
+    }
+    cout << '\n';
+}
+
+void printLetter(Node* temp)
+{
+    cout << "Letter | ";
+    while(temp!=NULL)
+    {
+        cout << temp->letter << " | ";
+        temp = temp->next;
+    }
+    cout << '\n';
 }

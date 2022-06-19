@@ -1,6 +1,6 @@
 class Dictionary
 {
-    std::string* dictionary = new std::string[370105];
+    std::string* dictionary = new std::string[370105]{};
 
     public:
     Dictionary()
@@ -10,10 +10,10 @@ class Dictionary
 
         if(!f.is_open())
         {
-            cout << "Error when opening file.\n";
+            cout << "Error when opening dictionary file.\n";
         }
 
-        int i = 0;
+        int i{};
         while(!f.eof())
         {
             f>>dictionary[i];
@@ -24,12 +24,9 @@ class Dictionary
 
     bool checkDictionary(std::string search)
     {
-        for(int i = 0; i<370105; i++)
+        for(int i{}; i<370105; i++)
         {
-            if(search == dictionary[i])
-            {
-                return true;
-            }
+            if(search == dictionary[i]) return true;
         }
         return false;
     }

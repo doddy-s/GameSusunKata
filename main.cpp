@@ -1,21 +1,22 @@
 #include <iostream>
 #include <time.h>
-#include <stdlib.h>
 #include <fstream>
+#include <random>
 
 using std::cout;
 using std::cin;
 
 #include "modules/LinkedList.cpp"
-#include "modules/LetterPicker.cpp"
-#include "modules/DictionaryChecker.cpp"
+#include "modules/Randomizer.cpp"
+#include "modules/Dictionary.cpp"
+#include "modules/io.cpp"
 
 int main()
 {
-    srand(time(0));
-    int menu, subMenu, index;
+    int menu, subMenu;
     Node* tableHead = NULL;
     Node* handHead = NULL;
+    Randomizer random;
     Dictionary checker;
     
     do
@@ -30,66 +31,76 @@ int main()
         cout << "0.) Exit\n";
         cout << "Input = ";
         
-        cin >> menu;
+        menu = inputInteger(0, 6);
 
         system("clear");
 
         if(menu == 1)
         {
-            for(int i = 0; i < 4; i++)
+            int tableIndex, handIndex, index, index2;
+
+            for(int i{}; i < 5; i++)
             {
-                addNodeLeft(&tableHead, getLetter());
-                addNodeLeft(&handHead, getLetter());
+                addNodeLeft(&tableHead, random.getLetter());
+                tableIndex = 5;
+                addNodeLeft(&handHead, random.getLetter());
+                handIndex = 5;
             }
 
             do
             {
                 system("clear");
 
-                cout << "Table\n";
+                cout << "\tTable\n";
                 printIndex(tableHead);
-                printLinkedList(tableHead);
-                cout << '\n';
-                cout << "Hand\n";
-                printIndex(handHead);
-                printLinkedList(handHead);
-                cout << '\n';
+                printLetter(tableHead);
 
-                cout << "1.) Ambil huruf dari table\n";
+                cout << "\n\tHand\n";
+                printIndex(handHead);
+                printLetter(handHead);
+
+                cout << "\n1.) Hapus huruf dari table\n";
                 cout << "2.) Masukkan huruf ke table\n";
+                cout << "3.) Reverse huruf pada table\n";
                 cout << "0.) Submit susunan pada table\n";
 
-                cin >> subMenu;
+                subMenu = inputInteger(0, 3);
                 if(subMenu == 1)
                 {
                     cout << "Index ke? ";
-                    cin >> index;
-                    deleteNode(&tableHead, &handHead, index);
+                    index = inputInteger(1, tableIndex);
+                    deleteNode(&tableHead, index);
+                    tableIndex--;
                 }
                 else if(subMenu == 2)
                 {
                     cout << "Dari index ke? ";
-                    cin >> index;
-                    deleteNode(&handHead, &tableHead, index);
+                    index = inputInteger(1, handIndex);
+                    cout << "Ke index setelah? ";
+                    index2 = inputInteger(1, tableIndex);
+                    addNodeMid(&tableHead,getLetter(handHead,handIndex),index2);
+                    deleteNode(&handHead, index);
+                    handIndex--;
+                    tableIndex++;
+                }
+                else if(subMenu == 3)
+                {
+                    reverse(&tableHead);
                 }
             } while (subMenu != 0);
 
             system("clear");
             
             std::string submit;
-            submit = "test";
+            for(int i = 1; i <= tableIndex; i++)
+                submit += getLetter(tableHead, i);
             
             if(checker.checkDictionary(submit))
-            {
                 cout << "Kata yang anda submit ada di kamus\n";
-            }
             else
-            {
                 cout << "Kata yang anda submit tidak ada di kamus\n";
-            }
 
-            cin.ignore();
-            cin.ignore();
+            hold();
         }
         /**
         else if(menu == 2)
