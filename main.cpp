@@ -6,10 +6,10 @@
 using std::cout;
 using std::cin;
 
-#include "modules/LinkedList.cpp"
-#include "modules/Randomizer.cpp"
-#include "modules/Dictionary.cpp"
-#include "modules/io.cpp"
+#include "lib/LinkedList.cpp"
+#include "lib/Randomizer.cpp"
+#include "lib/Dictionary.cpp"
+#include "lib/io.cpp"
 
 int main()
 {
@@ -25,9 +25,6 @@ int main()
         cout << "1.) Play\n";
         cout << "2.) Highscores\n";
         cout << "3.)\n";
-        cout << "4.)\n";
-        cout << "5.)\n";
-        cout << "6.)\n";
         cout << "0.) Exit\n";
         cout << "Input = ";
         
@@ -37,7 +34,7 @@ int main()
 
         if(menu == 1)
         {
-            int tableIndex, handIndex, index, index2;
+            int tableIndex, handIndex, index, index2, score{};
 
             for(int i{}; i < 5; i++)
             {
@@ -96,7 +93,12 @@ int main()
                 submit += getLetter(tableHead, i);
             
             if(checker.checkDictionary(submit))
+            {
                 cout << "Kata yang anda submit ada di kamus\n";
+                
+                //score akan dimasukkan ke queue highscore
+                score += tableIndex; 
+            }
             else
                 cout << "Kata yang anda submit tidak ada di kamus\n";
 

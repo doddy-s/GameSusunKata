@@ -1,5 +1,3 @@
-using std::cout;
-
 struct Node
 {
     char letter;
