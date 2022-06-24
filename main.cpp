@@ -18,6 +18,9 @@ int main()
     Node* handHead = NULL;
     Randomizer random;
     Dictionary checker;
+
+    //queue highscore
+    int highscore[10]{};
     
     do
     {
@@ -35,6 +38,7 @@ int main()
         if(menu == 1)
         {
             int tableIndex, handIndex, index, index2, score{};
+            bool win = true;
 
             for(int i{}; i < 5; i++)
             {
@@ -46,63 +50,66 @@ int main()
 
             do
             {
+                do
+                {
+                    system("clear");
+
+                    cout << "\tTable\n";
+                    printIndex(tableHead);
+                    printLetter(tableHead);
+
+                    cout << "\n\tHand\n";
+                    printIndex(handHead);
+                    printLetter(handHead);
+
+                    cout << "\n1.) Hapus huruf dari table\n";
+                    cout << "2.) Masukkan huruf ke table\n";
+                    cout << "3.) Reverse huruf pada table\n";
+                    cout << "0.) Submit susunan pada table\n";
+
+                    subMenu = inputInteger(0, 3);
+                    if(subMenu == 1)
+                    {
+                        cout << "Index ke? ";
+                        index = inputInteger(1, tableIndex);
+                        deleteNode(&tableHead, index);
+                        tableIndex--;
+                    }
+                    else if(subMenu == 2)
+                    {
+                        cout << "Dari index ke? ";
+                        index = inputInteger(1, handIndex);
+                        cout << "Ke index setelah? ";
+                        index2 = inputInteger(1, tableIndex);
+                        addNodeMid(&tableHead,getLetter(handHead,handIndex),index2);
+                        deleteNode(&handHead, index);
+                        handIndex--;
+                        tableIndex++;
+                    }
+                    else if(subMenu == 3)
+                    {
+                        reverse(&tableHead);
+                    }
+                } while (subMenu != 0);
+
                 system("clear");
-
-                cout << "\tTable\n";
-                printIndex(tableHead);
-                printLetter(tableHead);
-
-                cout << "\n\tHand\n";
-                printIndex(handHead);
-                printLetter(handHead);
-
-                cout << "\n1.) Hapus huruf dari table\n";
-                cout << "2.) Masukkan huruf ke table\n";
-                cout << "3.) Reverse huruf pada table\n";
-                cout << "0.) Submit susunan pada table\n";
-
-                subMenu = inputInteger(0, 3);
-                if(subMenu == 1)
-                {
-                    cout << "Index ke? ";
-                    index = inputInteger(1, tableIndex);
-                    deleteNode(&tableHead, index);
-                    tableIndex--;
-                }
-                else if(subMenu == 2)
-                {
-                    cout << "Dari index ke? ";
-                    index = inputInteger(1, handIndex);
-                    cout << "Ke index setelah? ";
-                    index2 = inputInteger(1, tableIndex);
-                    addNodeMid(&tableHead,getLetter(handHead,handIndex),index2);
-                    deleteNode(&handHead, index);
-                    handIndex--;
-                    tableIndex++;
-                }
-                else if(subMenu == 3)
-                {
-                    reverse(&tableHead);
-                }
-            } while (subMenu != 0);
-
-            system("clear");
-            
-            std::string submit;
-            for(int i = 1; i <= tableIndex; i++)
-                submit += getLetter(tableHead, i);
-            
-            if(checker.checkDictionary(submit))
-            {
-                cout << "Kata yang anda submit ada di kamus\n";
                 
-                //score akan dimasukkan ke queue highscore
-                score += tableIndex; 
-            }
-            else
-                cout << "Kata yang anda submit tidak ada di kamus\n";
+                std::string submit;
+                for(int i = 1; i <= tableIndex; i++)
+                    submit += getLetter(tableHead, i);
+                
+                if(checker.checkDictionary(submit))
+                {
+                    cout << "Kata yang anda submit ada di kamus\n";
+                    score += tableIndex; 
+                }
+                else
+                    cout << "Kata yang anda submit tidak ada di kamus\n";
+                    win = false;
+                hold();
+            }while(win);
 
-            hold();
+            //masukkan score ke queue
         }
         /**
         else if(menu == 2)
