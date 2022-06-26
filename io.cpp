@@ -47,3 +47,32 @@ int inputInteger(int a, int b)
 
     return stoi(userInput);
 }
+
+void saveData(char* fileName, Score *write)
+{
+	std::ofstream f(fileName, std::ios::binary);
+
+	if (f.is_open()) {
+		f.write(reinterpret_cast<char*>(write), 10 * sizeof(Score));
+		std::cout << "Save data berhasil\n";
+		f.close();
+	}
+	else
+	{
+		std::cout << "Gagal tersimpan\n";
+	}
+}
+void loadData(char* fileName, Score *read)
+{
+	std::ifstream f(fileName, std::ios::binary);
+
+	if (f.is_open()) {
+		f.read(reinterpret_cast<char*>(read), 10 * sizeof(Score));
+		std::cout << "Load data berhasil\n";
+		f.close();
+	}
+	else
+	{
+		std::cout << "Load file gagal. Pastikan nama file benar!\n";
+	}
+}

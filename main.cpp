@@ -9,6 +9,7 @@ using std::cin;
 #include "LinkedList.cpp"
 #include "Randomizer.cpp"
 #include "Dictionary.cpp"
+#include "Score.cpp"
 #include "io.cpp"
 
 int main()
@@ -19,39 +20,44 @@ int main()
     Randomizer random;
     Dictionary checker;
 
-    int highscore[10]{};
+    Score highScore[10];
+    Score history[10];
+
+    //loadData('highScore.dat', &highScore[10]);
+    //loadData('history.dat', &history[10]);
     
     do
     {
-        system("clear");
+        system("cls");
         cout << "1.) Play\n";
         cout << "2.) Highscores\n";
-        cout << "3.) Cara Main\n";
+        cout << "3.) History\n";
+        cout << "4.) Cara Main\n";
         cout << "0.) Exit\n";
-        cout << "Input = ";
+        cout << "Input: ";
         
         menu = inputInteger(0, 6);
 
-        system("clear");
+        system("cls");
 
         if(menu == 1)
         {
             int tableIndex, handIndex, index, index2, score{};
             bool win = true;
-
-            for(int i{}; i < 5; i++)
-            {
-                addNodeLeft(&tableHead, random.getLetter());
-                tableIndex = 5;
-                addNodeLeft(&handHead, random.getLetter());
-                handIndex = 5;
-            }
+            char name[8];
 
             do
             {
+                for(int i{}; i < 4; i++)
+                    {
+                        addNodeLeft(&tableHead, random.getLetter());
+                        addNodeLeft(&handHead, random.getLetter());
+                    }
+                tableIndex = 4;
+                handIndex = 4;
                 do
                 {
-                    system("clear");
+                    system("cls");
 
                     cout << "\tTable\n";
                     printIndex(tableHead);
@@ -65,83 +71,100 @@ int main()
                     cout << "2.) Masukkan huruf ke table\n";
                     cout << "3.) Reverse huruf pada table\n";
                     cout << "0.) Submit susunan pada table\n";
+                    cout << "Input: ";
 
                     subMenu = inputInteger(0, 3);
                     if(subMenu == 1)
                     {
+                        if(tableHead == 0) continue;
+
                         cout << "Index ke? ";
                         index = inputInteger(1, tableIndex);
+
                         deleteNode(&tableHead, index);
                         tableIndex--;
                     }
                     else if(subMenu == 2)
                     {
+                        if(handIndex == 0) continue;
+
                         cout << "Dari index ke? ";
                         index = inputInteger(1, handIndex);
-                        cout << "Ke index setelah? ";
-                        index2 = inputInteger(1, tableIndex);
-                        addNodeMid(&tableHead,getLetter(handHead,index),index2);
+                        
+                        if(tableIndex == 0)
+                        {
+                            addNodeLeft(&tableHead,getLetter(handHead,index));
+                        }
+                        else
+                        {
+                            cout << "Ke index setelah? ";
+                            index2 = inputInteger(1, tableIndex);
+                            addNodeMid(&tableHead,
+                            getLetter(handHead, index), index2);
+                        }
+
                         deleteNode(&handHead, index);
                         handIndex--;
                         tableIndex++;
                     }
                     else if(subMenu == 3)
                     {
+                        if(tableIndex == 0) continue;
                         reverse(&tableHead);
                     }
                 } while (subMenu != 0);
 
-                system("clear");
+                system("cls");
                 
                 std::string submit;
                 for(int i = 1; i <= tableIndex; i++)
                     submit += getLetter(tableHead, i);
                 
-                submit = "test";
+                //submit = "test";
                 if(checker.checkDictionary(submit))
                 {
-                    cout << "Kata yang anda submit ada di kamus\n";
+                    cout << "Kata yang anda submit ada di kamus";
                     score += tableIndex; 
                 }
                 else
-                    cout << "Kata yang anda submit tidak ada di kamus\n";
+                {
+                    cout << "Kata yang anda submit tidak ada di kamus";
                     win = false;
-                hold();
-            }while(win == true);
+                }
 
-            //masukkan score ke queue
+                deleteList(&tableHead);
+                deleteList(&handHead);
+
+                hold();
+            }while(win);
+
+            cout << "Game Over";
+            cout << "Masukkan nama anda: ";
+            cin >> name;
+
+            //Proses input score ke highScore[] disini
+
+            //Proses input score ke history[] disini
             
         }
-        /**
         else if(menu == 2)
         {
+            //Tampilkan highScore[]
 
         }
         else if(menu == 3)
         {
+            //Tampilkan history[]
 
         }
         else if(menu == 4)
         {
+            //Tampilkan cara bermain
 
         }
-        else if(menu == 5)
-        {
-
-        }
-        else if(menu == 6)
-        {
-
-        }
-        else if(menu == 7)
-        {
-
-        }
-        else if(menu == 8)
-        {
-
-        }
-        **/
     } while (menu != 0);
-    
+
+    //saveData('highScore.dat', &highScore[10]);
+    //saveData('history.dat', &history[10]);
+
 }
