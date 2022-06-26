@@ -14,7 +14,7 @@ using std::cin;
 
 int main()
 {
-    int menu, subMenu;
+    int mainMenu, subMenu;
     Node* tableHead = NULL;
     Node* handHead = NULL;
     Randomizer random;
@@ -36,11 +36,11 @@ int main()
         cout << "0.) Exit\n";
         cout << "Input: ";
         
-        menu = inputInteger(0, 6);
+        mainMenu = inputInteger(0, 6);
 
         system("cls");
 
-        if(menu == 1)
+        if(mainMenu == 1)
         {
             int tableIndex, handIndex, index, index2, score{};
             bool win = true;
@@ -147,22 +147,22 @@ int main()
             //Proses input score ke history[] disini
             
         }
-        else if(menu == 2)
+        else if(mainMenu == 2)
         {
             //Tampilkan highScore[]
 
         }
-        else if(menu == 3)
+        else if(mainMenu == 3)
         {
             //Tampilkan history[]
 
         }
-        else if(menu == 4)
+        else if(mainMenu == 4)
         {
             //Tampilkan cara bermain
 
         }
-    } while (menu != 0);
+    } while (mainMenu != 0);
 
     //saveData('highScore.dat', &highScore[10]);
     //saveData('history.dat', &history[10]);
