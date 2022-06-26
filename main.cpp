@@ -6,10 +6,10 @@
 using std::cout;
 using std::cin;
 
-#include "lib/LinkedList.cpp"
-#include "lib/Randomizer.cpp"
-#include "lib/Dictionary.cpp"
-#include "lib/io.cpp"
+#include "LinkedList.cpp"
+#include "Randomizer.cpp"
+#include "Dictionary.cpp"
+#include "io.cpp"
 
 int main()
 {
@@ -19,7 +19,6 @@ int main()
     Randomizer random;
     Dictionary checker;
 
-    //queue highscore
     int highscore[10]{};
     
     do
@@ -27,7 +26,7 @@ int main()
         system("clear");
         cout << "1.) Play\n";
         cout << "2.) Highscores\n";
-        cout << "3.)\n";
+        cout << "3.) Cara Main\n";
         cout << "0.) Exit\n";
         cout << "Input = ";
         
@@ -81,7 +80,7 @@ int main()
                         index = inputInteger(1, handIndex);
                         cout << "Ke index setelah? ";
                         index2 = inputInteger(1, tableIndex);
-                        addNodeMid(&tableHead,getLetter(handHead,handIndex),index2);
+                        addNodeMid(&tableHead,getLetter(handHead,index),index2);
                         deleteNode(&handHead, index);
                         handIndex--;
                         tableIndex++;
@@ -98,6 +97,7 @@ int main()
                 for(int i = 1; i <= tableIndex; i++)
                     submit += getLetter(tableHead, i);
                 
+                submit = "test";
                 if(checker.checkDictionary(submit))
                 {
                     cout << "Kata yang anda submit ada di kamus\n";
@@ -107,9 +107,10 @@ int main()
                     cout << "Kata yang anda submit tidak ada di kamus\n";
                     win = false;
                 hold();
-            }while(win);
+            }while(win == true);
 
             //masukkan score ke queue
+            
         }
         /**
         else if(menu == 2)

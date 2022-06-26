@@ -6,7 +6,7 @@ class Dictionary
     Dictionary()
     {
         std::fstream f;
-        f.open("src/words_alpha.txt");
+        f.open("words_alpha.txt");
 
         if(!f.is_open())
         {
