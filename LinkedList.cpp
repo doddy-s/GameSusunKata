@@ -17,6 +17,12 @@ void addNodeRight(Node** pHead, char newChar)
     Node* temp = *pHead;
     *newNode = {newChar, NULL};
 
+    if (*pHead == NULL)  
+    {  
+        *pHead = newNode;  
+        return;  
+    } 
+
     while(temp->next!=NULL) temp = temp->next;
 
     temp->next = newNode;
@@ -107,10 +113,10 @@ void printIndex(Node* temp)
 
 void printLetter(Node* temp)
 {
-    cout << "Letter | ";
+    cout << '|';
     while(temp!=NULL)
     {
-        cout << temp->letter << " | ";
+        cout << " " << temp->letter << " |";
         temp = temp->next;
     }
     cout << '\n';

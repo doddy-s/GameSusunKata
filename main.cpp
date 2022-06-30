@@ -2,6 +2,8 @@
 #include <time.h>
 #include <fstream>
 #include <random>
+#include <conio.h>
+#include <stdio.h>
 
 using std::cout;
 using std::cin;
@@ -11,6 +13,7 @@ using std::cin;
 #include "Dictionary.cpp"
 #include "Score.cpp"
 #include "io.cpp"
+#include "Display.cpp"
 
 int main()
 {
@@ -29,102 +32,84 @@ int main()
     do
     {
         system("cls");
-        cout << "1.) Play\n";
+        red("1.) Play\n");
+        //cout << "\033[1;31m1.) Play\033[0m\n";
         cout << "2.) Highscores\n";
         cout << "3.) History\n";
         cout << "4.) Cara Main\n";
         cout << "0.) Exit\n";
-        cout << "Input: ";
         
-        mainMenu = inputInteger(0, 6);
+        //mainMenu = inputInteger(0, 6);
+
+        mainMenu = getch();
 
         system("cls");
 
-        if(mainMenu == 1)
+        if(mainMenu == '1')
         {
-            int tableIndex, handIndex, index, index2, score{};
+            int tableIndex, handIndex, index, index2, score{}, pointed = 1;
             bool win = true;
-            char name[8];
+            char name[8], play{};
+            std::string submit{};
 
             do
             {
                 for(int i{}; i < 4; i++)
                     {
-                        addNodeLeft(&tableHead, random.getLetter());
-                        addNodeLeft(&handHead, random.getLetter());
+                        addNodeLeft(&handHead, random.getVowel());
+                        addNodeLeft(&handHead, random.getConsonant());
                     }
-                tableIndex = 4;
-                handIndex = 4;
+                tableIndex = 0;
+                handIndex = 8;
                 do
                 {
                     system("cls");
 
-                    cout << "\tTable\n";
-                    printIndex(tableHead);
                     printLetter(tableHead);
-
-                    cout << "\n\tHand\n";
-                    printIndex(handHead);
+                    cout << '\n';
                     printLetter(handHead);
+                    cursor(pointed);
 
-                    cout << "\n1.) Hapus huruf dari table\n";
-                    cout << "2.) Masukkan huruf ke table\n";
-                    cout << "3.) Reverse huruf pada table\n";
-                    cout << "0.) Submit susunan pada table\n";
-                    cout << "Input: ";
+                    if(handIndex == 0) break;
 
-                    subMenu = inputInteger(0, 3);
-                    if(subMenu == 1)
+                    play = getch();
+
+                    if(play == 'w')
                     {
-                        if(tableHead == 0) continue;
+                        addNodeRight(&tableHead, getLetter(handHead, pointed));
+                        deleteNode(&handHead, pointed);
 
-                        cout << "Index ke? ";
-                        index = inputInteger(1, tableIndex);
-
-                        deleteNode(&tableHead, index);
-                        tableIndex--;
-                    }
-                    else if(subMenu == 2)
-                    {
-                        if(handIndex == 0) continue;
-
-                        cout << "Dari index ke? ";
-                        index = inputInteger(1, handIndex);
-                        
-                        if(tableIndex == 0)
-                        {
-                            addNodeLeft(&tableHead,getLetter(handHead,index));
-                        }
-                        else
-                        {
-                            cout << "Ke index setelah? ";
-                            index2 = inputInteger(1, tableIndex);
-                            addNodeMid(&tableHead,
-                            getLetter(handHead, index), index2);
-                        }
-
-                        deleteNode(&handHead, index);
                         handIndex--;
                         tableIndex++;
                     }
-                    else if(subMenu == 3)
+                    else if(play == 'a')
                     {
-                        if(tableIndex == 0) continue;
-                        reverse(&tableHead);
+                        if(pointed == 0) continue;
+                        pointed--;
                     }
-                } while (subMenu != 0);
+                    else if(play == 'd')
+                    {
+                        if(pointed == handIndex) continue;
+                        pointed++;
+                    }
+                    else if(play == 's')
+                    {
+                        deleteNode(&handHead, pointed);
+                        handIndex--;
+                    }
+                } while (play != 'q');
 
                 system("cls");
                 
-                std::string submit;
                 for(int i = 1; i <= tableIndex; i++)
-                    submit += getLetter(tableHead, i);
+                    submit += tolower(getLetter(tableHead, i));
+
+                //scout << submit;
                 
-                //submit = "test";
                 if(checker.checkDictionary(submit))
                 {
                     cout << "Kata yang anda submit ada di kamus";
-                    score += tableIndex; 
+                    score += tableIndex;
                 }
                 else
                 {
@@ -134,35 +119,37 @@ int main()
 
                 deleteList(&tableHead);
                 deleteList(&handHead);
+                submit.erase();
 
                 hold();
             }while(win);
 
             cout << "Game Over";
-            cout << "Masukkan nama anda: ";
-            cin >> name;
+            //cout << "Masukkan nama anda: ";
+            //cin >> name;
 
             //Proses input score ke highScore[] disini
 
             //Proses input score ke history[] disini
+            hold();
             
         }
-        else if(mainMenu == 2)
+        else if(mainMenu == '2')
         {
             //Tampilkan highScore[]
 
         }
-        else if(mainMenu == 3)
+        else if(mainMenu == '3')
         {
             //Tampilkan history[]
 
         }
-        else if(mainMenu == 4)
+        else if(mainMenu == '4')
         {
             //Tampilkan cara bermain
 
         }
-    } while (mainMenu != 0);
+    } while (mainMenu != '0');
 
     //saveData('highScore.dat', &highScore[10]);
     //saveData('history.dat', &history[10]);

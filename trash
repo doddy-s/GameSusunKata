@@ -1,0 +1,38 @@
+                    if(subMenu == 1)
+                    {
+                        if(tableHead == 0) continue;
+
+                        cout << "Index ke? ";
+                        index = inputInteger(1, tableIndex);
+
+                        deleteNode(&tableHead, index);
+                        tableIndex--;
+                    }
+                    else if(subMenu == 2)
+                    {
+                        if(handIndex == 0) continue;
+
+                        cout << "Dari index ke? ";
+                        index = inputInteger(1, handIndex);
+                        
+                        if(tableIndex == 0)
+                        {
+                            addNodeLeft(&tableHead,getLetter(handHead,index));
+                        }
+                        else
+                        {
+                            cout << "Ke index setelah? ";
+                            index2 = inputInteger(1, tableIndex);
+                            addNodeMid(&tableHead,
+                            getLetter(handHead, index), index2);
+                        }
+
+                        deleteNode(&handHead, index);
+                        handIndex--;
+                        tableIndex++;
+                    }
+                    else if(subMenu == 3)
+                    {
+                        if(tableIndex == 0) continue;
+                        reverse(&tableHead);
+                    }
