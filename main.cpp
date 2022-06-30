@@ -3,7 +3,6 @@
 #include <fstream>
 #include <random>
 #include <conio.h>
-#include <stdio.h>
 
 using std::cout;
 using std::cin;
@@ -23,8 +22,8 @@ int main()
     Randomizer random;
     Dictionary checker;
 
-    Score highScore[10];
-    Score history[10];
+    Score *highScore = new Score[10];
+    Score *history = new Score[10];
 
     //loadData('highScore.dat', &highScore[10]);
     //loadData('history.dat', &history[10]);
