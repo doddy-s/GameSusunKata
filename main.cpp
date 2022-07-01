@@ -14,8 +14,6 @@ using std::cin;
 #include "src/Score.cpp"
 #include "src/io.cpp"
 #include "src/Display.cpp"
-#include "src/Sort.cpp"
-#include "src/HighScore.cpp"
 
 int main()
 {
