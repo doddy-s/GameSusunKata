@@ -3,16 +3,19 @@
 #include <fstream>
 #include <random>
 #include <conio.h>
+#include <cstring>
 
 using std::cout;
 using std::cin;
 
-#include "LinkedList.cpp"
-#include "Randomizer.cpp"
-#include "Dictionary.cpp"
-#include "Score.cpp"
-#include "io.cpp"
-#include "Display.cpp"
+#include "src/LinkedList.cpp"
+#include "src/Randomizer.cpp"
+#include "src/Dictionary.cpp"
+#include "src/Score.cpp"
+#include "src/io.cpp"
+#include "src/Display.cpp"
+#include "src/Sort.cpp"
+#include "src/HighScore.cpp"
 
 int main()
 {
@@ -22,23 +25,32 @@ int main()
     Randomizer random;
     Dictionary checker;
 
-    Score *highScore = new Score[10];
-    Score *history = new Score[10];
+    Score *highScore = new Score[10]{};
+    Score *history = new Score[10]{};
 
-    //loadData('highScore.dat', &highScore[10]);
-    //loadData('history.dat', &history[10]);
+    //loadData("highScore.dat", highScore);
+    //loadData("history.dat", history);
+
+    for(int i{}; i < 10; i++)
+    {
+        highScore[i] = {1, "DEV", "NULL"};
+        strcpy(highScore[i].time, getTime().c_str());
+    }
+
+    for(int i{}; i < 10; i++)
+    {
+        history[i] = {1, "DEV", "NULL"};
+        strcpy(history[i].time, getTime().c_str());
+    }
     
     do
     {
         system("cls");
         red("1.) Play\n");
-        //cout << "\033[1;31m1.) Play\033[0m\n";
         cout << "2.) Highscores\n";
         cout << "3.) History\n";
         cout << "4.) Cara Main\n";
         cout << "0.) Exit\n";
-        
-        //mainMenu = inputInteger(0, 6);
 
         mainMenu = getch();
 
@@ -48,8 +60,8 @@ int main()
         {
             int tableIndex, handIndex, index, index2, score{}, pointed = 1;
             bool win = true;
-            char name[8], play{};
-            std::string submit{};
+            char play{};
+            std::string submit{}, name{};
 
             do
             {
@@ -96,6 +108,11 @@ int main()
                         deleteNode(&handHead, pointed);
                         handIndex--;
                     }
+                    else if(play == 'e')
+                    {
+                        addNodeRight(&handHead, random.getLetter());
+                        handIndex++;
+                    }
                 } while (play != 'q');
 
                 system("cls");
@@ -109,6 +126,7 @@ int main()
                 {
                     cout << "Kata yang anda submit ada di kamus";
                     score += tableIndex;
+                    hold();
                 }
                 else
                 {
@@ -119,29 +137,45 @@ int main()
                 deleteList(&tableHead);
                 deleteList(&handHead);
                 submit.erase();
-
-                hold();
             }while(win);
 
-            cout << "Game Over";
-            //cout << "Masukkan nama anda: ";
-            //cin >> name;
+            cout << "Game Over\n";
+            cout << "Masukkan nama anda: ";
+            cin >> name;
 
             //Proses input score ke highScore[] disini
-
+            inputHighScore(highScore, score, name);
+            
             //Proses input score ke history[] disini
+            inputHistory(history, score, name);
+
             hold();
             
         }
         else if(mainMenu == '2')
         {
-            //Tampilkan highScore[]
+            //Tampilkan highScore[],
+            for(int i{}; i < 10; i++)
+            {
+                cout << i+1 << ".)  " << highScore[i].name << "\t"
+                    << highScore[i].score << "\t"
+                    << highScore[i].time << '\n';
+            }
+
+            hold();
 
         }
         else if(mainMenu == '3')
         {
             //Tampilkan history[]
+            for(int i{}; i < 10; i++)
+            {
+                cout << i << ".)  " << history[i].name << "\t"
+                    << history[i].score << "\t"
+                    << history[i].time << '\n';
+            }
 
+            hold();
         }
         else if(mainMenu == '4')
         {
@@ -150,7 +184,7 @@ int main()
         }
     } while (mainMenu != '0');
 
-    //saveData('highScore.dat', &highScore[10]);
-    //saveData('history.dat', &history[10]);
+    //saveData("highScore.dat", highScore);
+    //saveData("history.dat", history);
 
 }
