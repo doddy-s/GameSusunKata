@@ -29,4 +29,4 @@ class Randomizer
     {
         return random() % 10;
     }
-};
+}random;

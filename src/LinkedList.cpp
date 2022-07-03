@@ -111,13 +111,17 @@ void printIndex(Node* temp)
     cout << '\n';
 }
 
-void printLetter(Node* temp)
+void printLetter(Node* temp, int cursor)
 {
+    int i = 1;
     cout << '|';
     while(temp!=NULL)
     {
-        cout << " " << temp->letter << " |";
+        if(i == cursor) 
+            cout << c.green << " " << temp->letter << c.reset << " |";
+        else cout << c.red << " " << temp->letter << c.reset << " |";
         temp = temp->next;
+        i++;    
     }
     cout << '\n';
 }

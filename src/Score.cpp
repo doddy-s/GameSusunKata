@@ -1,7 +1,7 @@
 struct Score
 {
     int score;
-    char name[8], time[25];
+    char name[7], time[25];
 };
 
 std::string getTime()
