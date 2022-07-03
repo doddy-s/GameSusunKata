@@ -4,47 +4,61 @@
 #include <random>
 #include <conio.h>
 #include <cstring>
+#include <windows.h>
+#include <Lmcons.h>
 
 using std::cout;
 using std::cin;
 
-#include "src/Randomizer.cpp"
-#include "src/Dictionary.cpp"
-#include "src/Score.cpp"
-#include "src/io.cpp"
-#include "src/Display.cpp"
-#include "src/LinkedList.cpp"
-#include "src/Setting.cpp"
-#include "src/Play.cpp"
+#include "Randomizer.cpp"
+#include "Dictionary.cpp"
+#include "Score.cpp"
+#include "Display.cpp"
+#include "LinkedList.cpp"
+#include "Setting.cpp"
+#include "io.cpp"
+#include "Play.cpp"
 
 int main()
 {
+    char username[UNLEN+1];
+    DWORD username_len = UNLEN+1;
+    GetUserName(username, &username_len);
+
+    std::string path = "C:/Users/" + std::string(username)
+                        + "/Documents/GameSusunKata/data/";
+    
     int mainCursor{};
     char mainMenu;
 
     Score *highScore = new Score[10]{};
     Score *history = new Score[10]{};
 
-    //loadData("highScore.dat", highScore);
-    //loadData("history.dat", history);
-    //loadData("setting.dat", history);
+    loadData(path + "highScore.dat", highScore);
+    loadData(path + "history.dat", history);
 
+    /**
     for(int i{}; i < 10; i++)
     {
-        highScore[i] = {i+100, "DEV", "NULL"};
+        highScore[i] = {0, "DEV", "NULL"};
+        strcpy(highScore[i].time, getTime().c_str());
     }
 
     for(int i{}; i < 10; i++)
     {
-        history[i] = {i+100, "DEV", "NULL"};
+        history[i] = {0, "DEV", "NULL"};
+        strcpy(history[i].time, getTime().c_str());
     }
-    
+    **/
+
+    printMenuGuide();
+
     while(true)
     {
         system("cls");
         printMenu(mainCursor);
 
-        mainMenu = getch();
+        mainMenu = tolower(getch());
 
         if(mainMenu == 'w')
         {
@@ -54,6 +68,8 @@ int main()
                 printScore(highScore);
             else if(mainCursor == 2)
                 printScoreReversed(history);
+            else if(mainCursor == 3)
+                printHowToPlay();
             else if(mainCursor == 4)
                 settingMenu();
             else if(mainCursor == 5)
@@ -79,8 +95,8 @@ int main()
         }
     }
 
-    //saveData("highScore.dat", highScore);
-    //saveData("history.dat", history);
-    //saveData("setting.dat", history);
+    cout << '\n';
+    saveData(path + "highScore.dat", highScore);
+    saveData(path + "history.dat", history);
 
 }

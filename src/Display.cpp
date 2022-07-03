@@ -15,9 +15,16 @@ struct menu
                                  "  SETTING  ", "   EXIT    "};
 }m;
 
+void hold()
+{
+    cout << "\nTekan apapun untuk melanjutkan";
+    getch();
+}
+
 void printMenu(int cursor)
 {
-    cout << c.green << "\t\t\t\t\tMAIN MENU\n" << c.reset;
+    cout << c.magenta << "\t\t\t\t\tGAME SUSUN KATA\n" << c.reset;
+    cout << c.green << "\t\t\t\t\t   MAIN MENU\n" << c.reset;
     cout << "\n|| ";
     for(int i{}; i < 6; i++)
     {
@@ -67,13 +74,47 @@ void printScoreReversed(Score *temp)
     {
         if(clr)
         cout << c.red << i+1 << ".   " << temp[9 - i].name << "\t"
-             << temp[9 - i].score << "\t" << temp[9 - i].time << c.reset << '\n';
+             << temp[9 - i].score << "\t" << temp[9- i].time << c.reset << '\n';
         else
         cout << c.green << i+1 << ".   " << temp[9 - i].name << "\t"
-             << temp[9 - i].score << "\t" << temp[9 - i].time << c.reset << '\n';
+             << temp[9 - i].score << "\t" << temp[9- i].time << c.reset << '\n';
 
         clr = !clr;
     }
+
+    hold();
+}
+
+void printMenuGuide()
+{
+    cout << "Navigasi Menu Dengan Cara\n";
+    cout << "a,d - gerakkan kursor\n";
+    cout << "w - akses menu\n";
+    cout << "Exit secara benar agar data tersimpan\n";
+    hold();
+}
+
+void printGuide()
+{
+    cout << "\nGUIDE:\n";
+    cout << "a,d - gerakkan kursor\n";
+    cout << "w - naikkan huruf\n";
+    cout << "s - delete huruf di bawah\n";
+    cout << "z - delete huruf di atas\n";
+    cout << "e - minta tambahan huruf\n";
+    cout << "q - submit kata\n";
+}
+
+void printHowToPlay()
+{
+    cout << "\n\nHOW TO PLAY\n";
+    cout << "1. Player akan diberikan sejumlah huruf pada barisan bawah yang dapat disusun pada barisan atas.\n";
+    cout << "2. Objective dari game ini adalah menyusun huruf yang disediakan menjadi kata dalam bahasa inggris\n";
+    cout << "3. Kata akan otomatis tersubmit setelah huruf pada barisan bawah habis\n";
+    cout << "4. Setiap huruf yang benar akan diberikan 1 score\n";
+    cout << "5. Player dapat meminta tambahan huruf dengan menukar skor (easy = 0, normal = 1, hard = 2)\n";
+    cout << "6. Pada easy difficulty skor akhir tidak dimasukkan ke highScore, pada hard difficulty skor akhir akan dikali 2";
+    printGuide();
 
     hold();
 }

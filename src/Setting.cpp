@@ -1,12 +1,12 @@
 struct Setting
 {
-    bool tutorialAwal, tutorialPlay;
+    bool guidePlay;
     int difficulty;
 
-    const std::string setting[3] = {"SHOW HELP DURING GAMEPLAY", "DIFFICULTY",
+    const std::string setting[3] = {"SHOW GUIDE DURING GAMEPLAY", "DIFFICULTY",
                                     "BACK"};
     const std::string diff[3] = {"EASY", "NORMAL", "HARD"};
-}*setting = new Setting{};
+}setting{};
 
 void printSetting(int cursor)
 {
@@ -16,18 +16,18 @@ void printSetting(int cursor)
     {
         if(i == cursor)
         {
-            cout << c.green << (*setting).setting[i] << c.reset;
+            cout << c.green << setting.setting[i] << c.reset;
             if(cursor == 0)
             {
                 cout << ": ";
-                if((*setting).tutorialPlay) cout << "ON";
+                if(setting.guidePlay) cout << "ON";
                 else cout << "OFF";
             }
             else if(cursor == 1)
-                cout << ": "<< (*setting).diff[(*setting).difficulty];
+                cout << ": "<< setting.diff[setting.difficulty];
         }
         else
-            cout << c.red << (*setting).setting[i] << c.reset;
+            cout << c.red << setting.setting[i] << c.reset;
         cout << " || ";
     }
 }
@@ -40,15 +40,15 @@ void settingMenu()
         system("cls");
         printSetting(cursor);
 
-        menu = getch();
+        menu = tolower(getch());
 
         if(menu == 'w')
         {
             if(cursor == 0)
-                (*setting).tutorialPlay = !(*setting).tutorialPlay;
+                setting.guidePlay = !setting.guidePlay;
             else if(cursor == 1)
-                if((*setting).difficulty == 2) (*setting).difficulty = 0;
-                else (*setting).difficulty++;
+                if(setting.difficulty == 2) setting.difficulty = 0;
+                else setting.difficulty++;
             else if(cursor == 2)
                 break;
         }

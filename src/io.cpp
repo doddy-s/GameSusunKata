@@ -1,9 +1,3 @@
-void hold()
-{
-    cout << "\nTekan apapun untuk melanjutkan";
-    getch();
-}
-
 char inputChar(char a, char b)
 {
     char userInput;

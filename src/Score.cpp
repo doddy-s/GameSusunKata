@@ -1,7 +1,7 @@
 struct Score
 {
     int score;
-    char name[7], time[25];
+    char name[7], time[26];
 };
 
 std::string getTime()
@@ -30,8 +30,8 @@ void inputHighScore(Score *highScore, int score, std::string name)
         highScore[9].score = score;
         strcpy(highScore[9].name, name.c_str());
         strcpy(highScore[9].time, getTime().c_str());
+        sortDescending(highScore);
     }
-    sortDescending(highScore);
 }
 
 void inputHistory(Score *history, int score, std::string name)

@@ -26,9 +26,11 @@ void play(Score *highScore, Score *history)
             printLetter(handHead, cursor);
             point(cursor);
 
+            if(setting.guidePlay) printGuide();
+
             if(handIndex == 0) break;
 
-            play = getch();
+            play = tolower(getch());
 
             if(play == 'w')
             {
@@ -69,11 +71,11 @@ void play(Score *highScore, Score *history)
             }
             else if(play == 'e')
             {
-                if((*setting).difficulty == 0)
+                if(setting.difficulty == 0)
                 {
                     addNodeRight(&handHead, random.getLetter());
                 }
-                else if((*setting).difficulty == 1)
+                else if(setting.difficulty == 1)
                 {
                     if(score > 0)
                     {
@@ -82,7 +84,7 @@ void play(Score *highScore, Score *history)
                     }
                     else cout << "\nScore kurang.";
                 }
-                else if((*setting).difficulty == 2)
+                else if(setting.difficulty == 2)
                 {
                     if(score > 1)
                     {
@@ -102,6 +104,7 @@ void play(Score *highScore, Score *history)
                     continue;
                 }
                 deleteNode(&tableHead, cursor);
+                tableIndex--;
             }
         } while (play != 'q');
 
@@ -134,8 +137,12 @@ void play(Score *highScore, Score *history)
     cout << "Masukkan nama anda: ";
     getline(cin, name);
 
+    if(setting.difficulty == 2)
+        score*=score;
+
     //Proses input score ke highScore[] disini
-    inputHighScore(highScore, score, name);
+    if(setting.difficulty != 0)
+        inputHighScore(highScore, score, name);
     
     //Proses input score ke history[] disini
     inputHistory(history, score, name);
